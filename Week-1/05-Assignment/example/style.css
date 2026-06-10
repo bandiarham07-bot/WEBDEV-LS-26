@@ -1,0 +1,302 @@
+/* =============================================
+   EXAMPLE: Creatively Bad Volume Control UI
+   Anti-patterns used:
+   1. Multi-step wizard for a single slider task
+   2. Unnecessary confirmation dialogs
+   3. Comic Sans on a "system preference" window
+   4. Hostile/absurd microcopy
+   5. Fake OS chrome to establish false authority
+   6. Slider that does nothing in real-time
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #1e1e2e;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.015) 0px,
+    rgba(255,255,255,0.015) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  padding: 24px;
+}
+
+/* Fake OS window */
+.os-chrome {
+  background: #f0f0f0;
+  border-radius: 12px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 520px;
+  overflow: hidden;
+}
+
+.titlebar {
+  background: linear-gradient(180deg, #e4e4e4 0%, #d0d0d0 100%);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #bbb;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.dot.red    { background: #ff5f57; }
+.dot.yellow { background: #febc2e; }
+.dot.green  { background: #28c840; }
+
+.titlebar-text {
+  font-size: 12px;
+  color: #555;
+  margin-left: 8px;
+  flex: 1;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Main panel */
+.panel {
+  padding: 32px 36px 36px;
+  background: white;
+}
+
+.panel-title {
+  /* Anti-pattern: Comic Sans on a serious system preference screen */
+  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  font-size: 22px;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 28px;
+}
+
+/* Steps */
+.step {
+  animation: fadeSlide 0.25s ease;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.step-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.step-desc {
+  font-size: 15px;
+  color: #222;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.1s;
+}
+
+button:hover {
+  filter: brightness(1.08);
+  transform: scale(1.02);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.btn-yes {
+  background: #4f46e5;
+  color: white;
+}
+
+.btn-no {
+  background: #f3f4f6;
+  color: #333;
+}
+
+/* Anti-pattern: "I don't know" button that doesn't help */
+.btn-maybe {
+  background: #fef3c7;
+  color: #92400e;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+/* Slider section */
+.slider-wrapper {
+  margin-bottom: 16px;
+}
+
+/* Anti-pattern: deliberately styled slider that feels off */
+.chaos-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    #ff6b6b,
+    #ffd93d,
+    #6bcb77,
+    #4d96ff,
+    #ff6b6b
+  );
+  border-radius: 3px;
+  outline: none;
+  margin-bottom: 8px;
+}
+
+.chaos-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E👆%3C/text%3E%3C/svg%3E") center/contain no-repeat;
+  cursor: grab;
+}
+
+.chaos-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+
+.slider-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #aaa;
+}
+
+#sliderValue {
+  font-weight: 700;
+  color: #4f46e5;
+  font-size: 13px;
+}
+
+.fine-print {
+  font-size: 10px;
+  color: #bbb;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Summary box */
+.summary-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.summary-box strong {
+  color: #111;
+}
+
+/* Result screen */
+.result-icon {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 12px;
+  animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+  0%   { transform: scale(0.5); }
+  70%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.result-msg {
+  font-size: 15px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* Anti-pattern: Volume bar only shows AFTER applying, with no real-time feedback */
+.volume-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.volume-bar-track {
+  flex: 1;
+  height: 20px;
+  background: #f3f4f6;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.volume-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5, #818cf8);
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  width: 0%;
+}
+
+.volume-number {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Comic Sans MS', cursive;
+  color: #4f46e5;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Watermark */
+.watermark {
+  margin-top: 16px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.05em;
+}
