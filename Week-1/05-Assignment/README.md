@@ -72,3 +72,9 @@ your-rollno-bad-ui/
 
 An example of a badly designed volume slider is attached please run the index.html file to see how it works
 
+## Submission
+
+Please submit your GitHub Repo here - [Submit](https://docs.google.com/forms/d/e/1FAIpQLScXvcXWdTtfCLuN0NZzdbgitvy7n_aJSuPCoiEJRjFVFYId9Q/viewform?usp=dialog)
+
+Deadline - June 17th 2026, 11:59 PM
+
